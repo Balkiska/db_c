@@ -24,6 +24,8 @@
   - [ ] Implémenter un arbre binaire pour stocker les données. (4 heures)
   - [ ] Implémenter des fonctions pour insérer, rechercher, équilibrer et supprimer des données dans l'arbre.(4 heures)
   - [ ] Implémenter la persistance des données sur disque via un fichier binaire. (2 heures)
+Conseil donné : 
+*en fait on fait l'arbre binaire, après tu mets la persistance sur le disque avec des fichiers genre txt/csv, pointer vers un fichier, il faut parcourir tout le dossier pour retrouver l'arbre
 
 - [ ] **Étape 6 : Tester et valider le projet** (Deadline : 13 novembre)
   - [ ] Créer plusieurs tests pour valider les fonctionnalités du projet. (3 heure)
