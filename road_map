@@ -1,14 +1,14 @@
 ### To-Do List pour le projet en C
 
-- [ ] **Étape 1 : Préparation de l'environnement** (Deadline : 14-15 octobre)
+- [x] **Étape 1 : Préparation de l'environnement** (Deadline : 14-15 octobre)
   - [x] Télécharger le projet depuis le dépôt GitHub.(10-15 minutes)
-  - [ ] Configurer l'environnement et vérifier la version du compilateur.(20-30 minutes)
-  - [ ] Créer un fichier Makefile pour automatiser la compilation du projet.(1 heure)
+  - [x] Configurer l'environnement et vérifier la version du compilateur.(20-30 minutes)
+  - [x] Créer un fichier Makefile pour automatiser la compilation du projet.(1 heure)
 
-- [ ] **Étape 2 : Créer un Makefile** (Deadline : 17 octobre)
-  - [ ] Définir les règles pour compiler les fichiers et créer l'exécutable. (1 heure)
-  - [ ] Ajouter les options de compilateur pour gérer les erreurs et les messages d'avertissement. (1 heure)
-  - [ ] Tester la commande `make` pour vérifier le bon fonctionnement du Makefile. (1 heure)
+- [x] **Étape 2 : Créer un Makefile** (Deadline : 17 octobre)(1 heure)
+  - [x] Définir les règles pour compiler les fichiers et créer l'exécutable.
+  - [x] Ajouter les options de compilateur pour gérer les erreurs et les messages d'avertissement. 
+  - [x] Tester la commande `make` pour vérifier le bon fonctionnement du Makefile.
 
 - [ ] **Étape 3 : Créer les structures de données** (Deadline : 23 octobre)
   - [ ] Créer une structure pour représenter une table (colonnes et données). (2 heures)
@@ -37,4 +37,4 @@ Conseil donné :
   - [ ] Vérifier et optimiser la qualité du code avec des outils de test et de validation. (2 heures)
   - [ ] Se préparer à justifier les choix de conception, d'architecture et de compilation lors de l'examen. (1 heure)
 
-**Date de rendu finale : 17 novembre** - Total estimé : 41 heures
+**Date de rendu finale : 17 novembre** 
