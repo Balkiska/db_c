@@ -1,0 +1,1 @@
+//Declares the Row structure and functions related to individual rows. This can be reused across other files to handle rows within tables.

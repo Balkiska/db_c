@@ -1,0 +1,1 @@
+//Implements functions specific to row operations within a table, such as row creation and data handling within rows.

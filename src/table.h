@@ -1,0 +1,1 @@
+//Declares the Table structure and functions related to table management. This will be included in files that need to work with tables.

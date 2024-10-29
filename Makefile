@@ -3,17 +3,37 @@ CC = gcc  # The compiler to use
 CFLAGS = -Wall -Wextra -g  # Compiler options
 LDFLAGS =  # Linking options
 
-# Rules
-all: db_c  # Default rule to create the executable
+TARGET = db_c  
+all: $(TARGET)
 
-db_c: main.o db.o  # The executable depends on object files
-	$(CC) $(LDFLAGS) -o db_c main.o db.o  # Command to create the executable
+# Object files
+OBJS = main.o table.o row.o btree.o repl.o
 
-main.o: main.c  # Compile main.c into main.o
-	$(CC) $(CFLAGS) -c main.c
+# Linking all object files into the executable (to create the $(TARGET) executable, the $(CC) compiler must link the $(OBJS) object files using the $(CFLAGS) compilation options.)
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-db.o: db.c db.h  # Compile db.c into db.o
-	$(CC) $(CFLAGS) -c db.c
+# Compiling each source file into object files
+main.o: src/main.c table.h row.h btree.h repl.h
+	$(CC) $(CFLAGS) -c src/main.c
 
-clean:  # Rule to remove object files and the executable
-	rm -f *.o db_c
+table.o: src/table.c table.h row.h
+	$(CC) $(CFLAGS) -c src/table.c
+
+row.o: src/row.c row.h
+	$(CC) $(CFLAGS) -c src/row.c
+
+btree.o: src/btree.c btree.h
+	$(CC) $(CFLAGS) -c src/btree.c
+
+repl.o: src/repl.c repl.h
+	$(CC) $(CFLAGS) -c src/repl.c
+	
+# Clean up object files and the executable
+clean:
+	rm -f $(OBJS) $(TARGET)
+
+# Run the program
+run: $(TARGET)
+	./$(TARGET)
+

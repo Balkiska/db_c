@@ -1,0 +1,1 @@
+//Implements functions related to table management (e.g., creation, deletion, and data access).

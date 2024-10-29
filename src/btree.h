@@ -1,0 +1,1 @@
+//Should declare the structure of the binary tree and prototypes for functions like insert, delete, search, and balance for binary tree operations.

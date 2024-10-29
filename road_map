@@ -1,40 +1,33 @@
 ### To-Do List pour le projet en C
 
-- [x] **Étape 1 : Préparation de l'environnement** (Deadline : 14-15 octobre)
-  - [x] Télécharger le projet depuis le dépôt GitHub.(10-15 minutes)
-  - [x] Configurer l'environnement et vérifier la version du compilateur.(20-30 minutes)
-  - [x] Créer un fichier Makefile pour automatiser la compilation du projet.(1 heure)
+- [x] **Étape 1 : Préparation de l'environnement**
+  - [x] Créer un fichier Makefile pour automatiser la compilation du projet.
 
-- [x] **Étape 2 : Créer un Makefile** (Deadline : 17 octobre)(1 heure)
-  - [x] Définir les règles pour compiler les fichiers et créer l'exécutable.
-  - [x] Ajouter les options de compilateur pour gérer les erreurs et les messages d'avertissement. 
-  - [x] Tester la commande `make` pour vérifier le bon fonctionnement du Makefile.
+- [ ] **Étape 2 : Organisation du Code**
+  - [ ] Diviser le projet en plusieurs fichiers `.c` et `.h` pour éviter un fichier monolithique.
+  - [ ] Documenter chaque fichier et fonction pour la maintenance future.
 
-- [ ] **Étape 3 : Créer les structures de données** (Deadline : 23 octobre)
-  - [ ] Créer une structure pour représenter une table (colonnes et données). (2 heures)
-  - [ ] Créer une structure pour représenter une ligne dans une table. (2 heures)
-  - [ ] Créer une fonction pour initialiser une table avec des colonnes et des lignes. (2 heures)
+- [ ] **Étape 3 : Structuration des Données**
+  - [ ] Définir la structure `Table` et `Row` dans un fichier `.h`.
+  - [ ] Structurer les lignes de la table, et si nécessaire, ajouter des données test pour éviter d’utiliser l’entrée utilisateur dans un premier temps.
 
-- [ ] **Étape 4 : Implémenter les commandes SQL de base** (Deadline : 30 octobre)
-  - [ ] Implémenter la fonction `select` pour récupérer des données d'une table. (3 heures)
-  - [ ] Implémenter la fonction `insert` pour ajouter une nouvelle ligne dans la table. (3 heures)
-  - [ ] Tester les fonctions `select` et `insert` avec des assertions pour valider leur bon fonctionnement. (2 heures)
+- [ ] **Étape 4 : Implémentation des Commandes SQL** 
+  - [ ] Implémenter la commande `select` pour récupérer les données.
+  - [ ] Implémenter la commande `insert` pour ajouter de nouvelles données.
 
-- [ ] **Étape 5 : Persistance des données avec un arbre binaire** (Deadline : 6 novembre)
-  - [ ] Implémenter un arbre binaire pour stocker les données. (4 heures)
-  - [ ] Implémenter des fonctions pour insérer, rechercher, équilibrer et supprimer des données dans l'arbre.(4 heures)
-  - [ ] Implémenter la persistance des données sur disque via un fichier binaire. (2 heures)
-Conseil donné : 
-*en fait on fait l'arbre binaire, après tu mets la persistance sur le disque avec des fichiers genre txt/csv, pointer vers un fichier, il faut parcourir tout le dossier pour retrouver l'arbre
+- [ ] **Étape 5 : Test et Vérification de Fonctionnalités**
+  - [ ] Écrire des tests avec `assert` pour vérifier le bon fonctionnement des commandes SQL (ex. `select` et `insert`).
+  - [ ] Garder une trace de l’état actuel de la base de données (pointeur ou indicateur).
 
-- [ ] **Étape 6 : Tester et valider le projet** (Deadline : 13 novembre)
-  - [ ] Créer plusieurs tests pour valider les fonctionnalités du projet. (3 heure)
-  - [ ] Utiliser Valgrind pour détecter les fuites de mémoire et tester la robustesse du code. (2 heures)
-  - [ ] Explorer l'utilisation de fuzzers pour tester la robustesse des entrées du programme. (2 heures)
+- [ ] **Étape 6 : Gestion des Données en Arbre Binaire**
+  - [ ] Implémenter les structures et algorithmes pour un arbre binaire équilibré.
+  - [ ] Développer les opérations de recherche, d'insertion, et de suppression sur l'arbre.
+  - [ ] Vérifier que les données sont stockées dans l'arbre binaire.
 
-- [ ] **Étape 7 : Finaliser et optimiser le projet** (Deadline : 16 novembre)
-  - [ ] Rédiger une documentation pour expliquer les fonctions et l'architecture du projet. (2 heures)
-  - [ ] Vérifier et optimiser la qualité du code avec des outils de test et de validation. (2 heures)
-  - [ ] Se préparer à justifier les choix de conception, d'architecture et de compilation lors de l'examen. (1 heure)
+- [ ] **Étape 7 : Persistance des Données sur Disque**
+  - [ ] Enregistrer les données de l’arbre binaire sur le disque.
+  - [ ] Vérifier la lecture/écriture des données pour assurer la persistance.
 
-**Date de rendu finale : 17 novembre** 
+- [ ] **Étape 8 : Qualité du Code et Audit** (Bonus)
+  - [ ] Utiliser des outils comme `valgrind` et des fuzzers (ex. AFL++) pour détecter et corriger les bugs.
+  - [ ] Ajouter des “sanitizers” pour les tests, et documenter les bugs trouvés et corrigés.
