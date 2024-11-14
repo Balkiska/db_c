@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/types.h>
 #include "table.h"
 
 
@@ -92,6 +93,7 @@ PrepareResult prepare_statement(InputBuffer* input_buffer, Statement* statement)
 //INSERT
 void execute_insert(Statement* statement) {
   printf("Insert command with data: %s\n", statement->data); 
+}
 
 //SELECT
 void execute_select() {
