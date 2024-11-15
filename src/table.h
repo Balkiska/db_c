@@ -1,12 +1,20 @@
 #ifndef TABLE_H
 #define TABLE_H
 
-#include <stdbool.h>
+typedef struct {
+    int id;
+    char* name;
+    char* email;
+} Row;
 
-// Declaration of table_insert to insert a row into the table
-bool table_insert(int id, char* name);
+typedef struct {
+    Row* rows;
+    int num_rows;
+    int max_rows;
+} Table;
 
-// Declaration of table_select to display all rows in the table
-void table_select();
+Table* new_table();
+void insert_row(Table* table, Row* row);
+void select_rows(Table* table);
 
 #endif
