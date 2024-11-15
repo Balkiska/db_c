@@ -17,7 +17,7 @@ $(TARGET): $(OBJS)
 main.o: src/main.c table.h row.h btree.h repl.h
 	$(CC) $(CFLAGS) -c src/main.c
 
-table.o: src/table.c table.h row.h
+table.o: src/table.c table.h btree.h row.h
 	$(CC) $(CFLAGS) -c src/table.c
 
 row.o: src/row.c row.h
@@ -26,14 +26,27 @@ row.o: src/row.c row.h
 btree.o: src/btree.c btree.h
 	$(CC) $(CFLAGS) -c src/btree.c
 
-repl.o: src/repl.c repl.h
+repl.o: src/repl.c repl.h table.h row.h
 	$(CC) $(CFLAGS) -c src/repl.c
+
+btree.o: btree.c btree.h row.h
+	$(CC) $(CFLAGS) -c src/btree.c
 	
 # Clean up object files and the executable
 clean:
 	rm -f $(OBJS) $(TARGET)
+or
+	rm -f *.o db
 
 # Run the program
 run: $(TARGET)
 	./$(TARGET)
+
+
+
+
+
+
+
+
 
