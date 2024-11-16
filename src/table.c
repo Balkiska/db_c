@@ -18,9 +18,9 @@ void add_row(Table* table, int id, const char* name, const char* email) {
         table->max_rows = (table->max_rows == 0) ? 1 : table->max_rows * 2;
         table->rows = (Row*)realloc(table->rows, sizeof(Row) * table->max_rows);
     }
-    table->rows[table->num_rows].id = id;
-    table->rows[table->num_rows].name = strdup(name);
-    table->rows[table->num_rows].email = strdup(email);
+    Row* new_row_ptr = new_row(id, name, email);
+    table->rows[table->num_rows] = *new_row_ptr;
+    free(new_row_ptr);
     table->num_rows++;
 }
 
