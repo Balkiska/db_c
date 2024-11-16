@@ -40,3 +40,4 @@ void table_select() {
         printf("(%d, %s)\n", table.rows[i].id, table.rows[i].name);
     }
 }
+
