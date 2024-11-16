@@ -3,9 +3,9 @@
 - [x] **Étape 1 : Préparation de l'environnement**
   - [x] Créer un fichier Makefile pour automatiser la compilation du projet.
 
-- [ ] **Étape 2 : Organisation du Code**
-  - [ ] Diviser le projet en plusieurs fichiers `.c` et `.h` pour éviter un fichier monolithique.
-  - [ ] Documenter chaque fichier et fonction pour la maintenance future.
+- [x] **Étape 2 : Organisation du Code**
+  - [x] Diviser le projet en plusieurs fichiers `.c` et `.h` pour éviter un fichier main qui contient tout.
+  - [x] Documenter chaque fichier et fonction pour la maintenance future.
 
 - [ ] **Étape 3 : Structuration des Données**
   - [ ] Définir la structure `Table` et `Row` dans un fichier `.h`.
