@@ -1,43 +1,34 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 #include "table.h"
 
-// Row and table structures 
-typedef struct {
-    int id;
-    char name[666]; 
-} Row;
-
-typedef struct {
-    Row rows[666]; 
-    int row_count;   
-} Table;
-
-// Initialize
-Table table = {.row_count = 0};
-
-// Insert a rowz into the table
-bool table_insert(int id, char* name) {
-    if (table.row_count >= 666) {
-        printf("Error: Table is full!!!!!\n");
-        return false;
-    }
-
-    Row row;
-    row.id = id;
-    strncpy(row.name, name, sizeof(row.name) - 1);
-    row.name[sizeof(row.name) - 1] = '\0';  
-    table.rows[table.row_count] = row;
-    table.row_count++;
-    return true;
+// Create table
+Table* new_table() {
+    Table* table = (Table*)malloc(sizeof(Table));
+    table->rows = NULL;
+    table->num_rows = 0;
+    table->max_rows = 0;
+    return table;
 }
 
-// Display all rowz in the table
-void table_select() {
-    printf("Displaying all rows:\n");
-    for (int i = 0; i < table.row_count; i++) {
-        printf("(%d, %s)\n", table.rows[i].id, table.rows[i].name);
+// Row management
+void add_row(Table* table, int id, const char* name, const char* email) {
+    if (table->num_rows == table->max_rows) {
+        table->max_rows = (table->max_rows == 0) ? 1 : table->max_rows * 2;
+        table->rows = (Row*)realloc(table->rows, sizeof(Row) * table->max_rows);
     }
+    Row* new_row_ptr = new_row(id, name, email);
+    table->rows[table->num_rows] = *new_row_ptr;
+    free(new_row_ptr);  
+    table->num_rows++;
 }
 
+// Print 
+void print_table(Table* table) {
+    printf("ID | Name | Email\n");
+    printf("---+------+-------\n");
+    for (int i = 0; i < table->num_rows; i++) {
+        printf("%d | %s | %s\n", table->rows[i].id, table->rows[i].name, table->rows[i].email);
+    }
+}
