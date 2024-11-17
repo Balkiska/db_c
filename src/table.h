@@ -1,24 +1,17 @@
 #ifndef TABLE_H
 #define TABLE_H
-#include "btree.h"
-#include "row.h"
-#include <stdbool.h>
 
-// Table structure
+// Rowz structure
 typedef struct {
-    Row* rows;
-    int num_rows;
-    int max_rows;
-    BTreeNode* index; 
-} Table;
+    int id;
+    char* name;
+    char* email;
+} Row;
 
 // Functions
-Table* new_table(void);
-void free_table(Table* table);
-bool insert_row(Table* table, int id, const char* name, const char* email);
-void select_all_rows(Table* table);
-void select_row_by_id(Table* table, int id);
-void select_row_by_name(Table* table, const char* name);
-void select_row_by_email(Table* table, const char* email);
+void backup_database();
+BTreeNode* insert(BTreeNode* root, Row* row);
+BTreeNode* search_by_id(BTreeNode* root, int id);
+BTreeNode* search_by_name(BTreeNode* root, const char* name);
 
 #endif
