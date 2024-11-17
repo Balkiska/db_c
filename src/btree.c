@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "btree.h"
-#include <unistd.h>
-#include <fcntl.h>
+#include <unistd.h>  
+#define MAX_NAME_LENGTH 666
+#define MAX_EMAIL_LENGTH 666
+#define FILENAME "database.bin"
 
 // Row structure
 typedef struct {
@@ -97,6 +98,73 @@ void print_tree(BTreeNode* root) {
     }
 }
 
+// Create a Row object
+Row* new_row(int id, const char* name, const char* email) {
+    Row* row = (Row*)malloc(sizeof(Row));
+    row->id = id;
+    row->name = strdup(name);
+    row->email = strdup(email);
+    return row;
+}
+
+// Save the tree to disk
+void save_tree_to_disk(BTreeNode* root) {
+    FILE* file = fopen(FILENAME, "wb");
+    if (file == NULL) {
+        perror("Error opening file for writing!!!!!!!!");
+        return;
+    }
+
+    // Xrite nodes recursively
+    void write_node(BTreeNode* node) {
+        if (node == NULL) {
+            return;
+        }
+        fwrite(&node->row->id, sizeof(int), 1, file);
+        fwrite(node->row->name, sizeof(char), MAX_NAME_LENGTH, file);
+        fwrite(node->row->email, sizeof(char), MAX_EMAIL_LENGTH, file);
+
+        write_node(node->left);
+        write_node(node->right);
+    }
+
+    write_node(root);
+    fclose(file);
+}
+
+// Load the tree from disk
+BTreeNode* load_tree_from_disk() {
+    FILE* file = fopen(FILENAME, "rb");
+    if (file == NULL) {
+        perror("Error opening file for reading!!!!!!!!");
+        return NULL;
+    }
+
+    BTreeNode* root = NULL;
+    void read_node() {
+        int id;
+        char name[MAX_NAME_LENGTH];
+        char email[MAX_EMAIL_LENGTH];
+
+        if (fread(&id, sizeof(int), 1, file) == 0) {
+            return;
+        }
+
+        fread(name, sizeof(char), MAX_NAME_LENGTH, file);
+        fread(email, sizeof(char), MAX_EMAIL_LENGTH, file);
+
+        Row* row = new_row(id, name, email);
+        root = insert(root, row);
+
+        read_node();
+    }
+
+    read_node();
+    fclose(file);
+
+    return root;
+}
+
 // Function do delete node by id
 BTreeNode* delete_by_id(BTreeNode* root, int id) {
     if (root == NULL) {
@@ -129,14 +197,6 @@ BTreeNode* delete_by_id(BTreeNode* root, int id) {
     return root;
 }
 
-// Show the tree 
-void print_in_order(BTreeNode* root) {
-    if (root != NULL) {
-        print_in_order(root->left);
-        printf("ID: %d, Name: %s, Email: %s\n", root->row->id, root->row->name, root->row->email);
-        print_in_order(root->right);
-    }
-}
 void backup_database(BTreeNode* root, const char* filename) {
     int fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
     if (fd == -1) {
@@ -160,11 +220,11 @@ void backup_recursive(BTreeNode* root, int fd) {
     backup_recursive(root->right, fd);  
 }
 
-// Function to restore data from a file
+// Restore data from a file
 BTreeNode* restore_database(const char* filename) {
     int fd = open(filename, O_RDONLY);
     if (fd == -1) {
-        perror("Error opening file for restoration");
+        perror("Error opening file for restoration!!!!!!");
         return NULL;
     }
 
@@ -210,4 +270,29 @@ void free_tree(BTreeNode* root) {
         free_row(root->row);
         free(root);
     }
+}
+
+// Free memory
+void free_tree(BTreeNode* root) {
+    if (root == NULL) {
+        return;
+    }
+
+    free_tree(root->left);
+    free_tree(root->right);
+    free(root->row->name);
+    free(root->row->email);
+    free(root->row);
+    free(root);
+}
+
+// Print
+void print_tree(BTreeNode* root) {
+    if (root == NULL) {
+        return;
+    }
+
+    print_tree(root->left);
+    printf("| %-30d | %-30s | %-30s |\n", root->row->id, root->row->name, root->row->email);
+    print_tree(root->right);
 }
