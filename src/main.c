@@ -1,78 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "btree.h"
-
-void print_separator() {
-    printf("+--------------------------------+--------------------------------+--------------------------------+ \n");
-}
-
-void print_header() {
-    print_separator();
-    printf("| %-30s | %-30s | %-30s |\n", "ID", "Name", "Email");
-    print_separator();
-}
-
-void print_row(Row* row) {
-    printf("| %-30d | %-30s | %-30s |\n", row->id, row->name, row->email);
-    print_separator();
-}
-
-int main() {
-    BTreeNode* root = NULL;
-
-    // Adding rows to the tree
-    root = insert(root, new_row(571, "moi", "moi@exemple.com"));
-    root = insert(root, new_row(294, "moi-même", "moi-même@exemple.com"));
-    root = insert(root, new_row(432, "pasmoi", "pasmoi@exemple.com"));
-
-    // Print all users in the tree
-    printf("\n-- All Users in the Database --\n");
-    print_header();
-    print_tree(root);
-    printf("\n");
-
-    // Searching by ID
-    int search_id = 571;
-    BTreeNode* search_result = search_by_id(root, search_id);
-    if (search_result != NULL) {
-        printf("\n-- Search by ID (%d) --\n", search_id);
-        print_header();
-        print_row(search_result->row);
-    } else {
-        printf("\nNo result found for ID !!!! Try again buddy %d.\n", search_id);
-    }
-
-    // Searching by Name
-    const char* search_name = "moi";
-    search_result = search_by_name(root, search_name);
-    if (search_result != NULL) {
-        printf("\n-- Search by Name ('%s') --\n", search_name);
-        print_header();
-        print_row(search_result->row);
-    } else {
-        printf("\nNo result found for Name '%s'.\n", search_name);
-    }
-
-    // Searching by Email
-    const char* search_email = "@exemple.com";
-    search_result = search_by_email(root, search_email);
-    if (search_result != NULL) {
-        printf("\n-- Search by Email ('%s') --\n", search_email);
-        print_header();
-        print_row(search_result->row);
-    } else {
-        printf("\nNo result found for Email '%s'.\n", search_email);
-    }
-
-    // Free tree memory
-    free_tree(root);
-    return 0;
-}
-
-
-
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "btree.h"
 
@@ -156,5 +83,7 @@ int main() {
 
     return 0;
 }
+
+
 
 
