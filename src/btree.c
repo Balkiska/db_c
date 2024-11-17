@@ -3,6 +3,7 @@
 #include <string.h>
 #include "btree.h"
 
+// Nodes structure
 BTreeNode* new_node(Row* row) {
     BTreeNode* node = (BTreeNode*)malloc(sizeof(BTreeNode));
     node->row = row;
@@ -71,6 +72,7 @@ BTreeNode* search_by_email(BTreeNode* root, const char* email) {
     return search_by_email(root->right, email);
 }
 
+//Print
 void print_tree(BTreeNode* root) {
     if (root != NULL) {
         print_tree(root->left);
@@ -79,6 +81,7 @@ void print_tree(BTreeNode* root) {
     }
 }
 
+// Free nodes
 void free_tree(BTreeNode* root) {
     if (root != NULL) {
         free_tree(root->left);
