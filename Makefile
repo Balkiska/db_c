@@ -9,7 +9,7 @@ all: $(TARGET)
 # Object files
 OBJS = main.o table.o row.o btree.o repl.o
 
-# Linking all object files into the executable (to create the $(TARGET) executable, the $(CC) compiler must link the $(OBJS) object files using the $(CFLAGS) compilation options.)
+# Links
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
@@ -28,9 +28,6 @@ btree.o: src/btree.c btree.h row.h
 
 repl.o: src/repl.c repl.h table.h row.h
 	$(CC) $(CFLAGS) -c src/repl.c
-
-btree.o: btree.c btree.h row.h
-	$(CC) $(CFLAGS) -c src/btree.c
 	
 # Clean up object files and the executable
 clean:
