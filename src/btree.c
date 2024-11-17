@@ -148,27 +148,32 @@ BTreeNode* load_tree_from_disk() {
     }
 
     BTreeNode* root = NULL;
-    void read_node() {
+    BTreeNode* new_node_from_file() {
         int id;
         char name[MAX_NAME_LENGTH];
         char email[MAX_EMAIL_LENGTH];
 
-        if (fread(&id, sizeof(int), 1, file) == 0) {
-            return;
+        if (fread(&id, sizeof(int), 1, file) != 1) {
+            return NULL;
         }
-
         fread(name, sizeof(char), MAX_NAME_LENGTH, file);
         fread(email, sizeof(char), MAX_EMAIL_LENGTH, file);
 
-        Row* row = new_row(id, name, email);
-        root = insert(root, row);
+        Row* row = (Row*)malloc(sizeof(Row));
+        row->id = id;
+        row->name = strdup(name);
+        row->email = strdup(email);
 
-        read_node();
+        BTreeNode* node = new_node(row);
+        node->left = new_node_from_file();
+        node->right = new_node_from_file();
+
+        return node;
     }
 
-    read_node();
-    fclose(file);
+    root = new_node_from_file();
 
+    fclose(file);
     return root;
 }
 
