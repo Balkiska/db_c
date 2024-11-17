@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include "table.h"
+#include "btree.c"
 
 
 typedef enum {
@@ -21,7 +22,6 @@ typedef struct {
 } Statement;
 
 // buffer management 
-
 typedef struct {
   char* buffer;
   size_t buffer_length;
@@ -62,42 +62,52 @@ void close_input_buffer(InputBuffer* input_buffer) {
   free(input_buffer);
 }
 
-// order processing ‘.’
+// Order processing '.'
 MetaCommandResult do_meta_command(InputBuffer* input_buffer) {
-  if (strcmp(input_buffer->buffer, ".exit") == 0) {
-    close_input_buffer(input_buffer);
-    exit(EXIT_SUCCESS);
-  } else {
-    //TODO  here implement handling of other input as .exit
+    if (strcmp(input_buffer->buffer, ".exit") == 0) {
+        close_input_buffer(input_buffer);
+        exit(EXIT_SUCCESS);
+    }
+    // Backup database
+    if (strcmp(input_buffer->buffer, ".backup") == 0) {
+        backup_database();
+        return META_COMMAND_SUCCESS;
+    }
     return META_COMMAND_UNRECOGNIZED_COMMAND;
-  }
 }
 
-// preparation of the instruction
+// Preparation of the statement
 PrepareResult prepare_statement(InputBuffer* input_buffer, Statement* statement) {
-  if (strncmp(input_buffer->buffer, "insert", 6) == 0) {
-    statement->type = STATEMENT_INSERT;
-    
-    statement->data = strdup(input_buffer->buffer + 7);
-    return PREPARE_SUCCESS;
-  }
-  
-  if (strcmp(input_buffer->buffer, "select") == 0) {
-    statement->type = STATEMENT_SELECT;
-    return PREPARE_SUCCESS;
-  }
-  
-  return PREPARE_UNRECOGNIZED_STATEMENT;
+    if (strncmp(input_buffer->buffer, "insert", 6) == 0) {
+        statement->type = STATEMENT_INSERT;
+        statement->data = strdup(input_buffer->buffer + 7);
+        return PREPARE_SUCCESS;
+    }
+    if (strcmp(input_buffer->buffer, "select") == 0) {
+        statement->type = STATEMENT_SELECT;
+        return PREPARE_SUCCESS;
+    }
+    return PREPARE_UNRECOGNIZED_STATEMENT;
 }
 
 //INSERT
 void execute_insert(Statement* statement) {
-  printf("Insert command with data: %s\n", statement->data); 
+    printf("Insert command with data: %s\n", statement->data);
+    Row* row = (Row*)malloc(sizeof(Row)); 
+    row->id = 666; 
+    row->name = statement->data; 
+    root = insert(root, row); 
 }
 
 //SELECT
 void execute_select() {
-  printf("Executing SELECT command...\n"); 
+    printf("Executing SELECT command...\n");
+    BTreeNode* result = search_by_id(root, 666); 
+    if (result != NULL) {
+        printf("Found row: %s\n", result->row->name);
+    } else {
+        printf("Row not found !!!!!!!\n");
+    }
 }
 
 // Executes the instruction according to its type
@@ -125,7 +135,7 @@ void repl(void) {
         case (META_COMMAND_SUCCESS):
           continue;
         case (META_COMMAND_UNRECOGNIZED_COMMAND):
-          printf("Unrecognized command '%s'\n", input_buffer->buffer);
+          printf("Unrecognized command... '%s'\n", input_buffer->buffer);
           continue;
       }
     }
@@ -144,6 +154,3 @@ void repl(void) {
   }
 }
 
-int main() {
-  repl();
-}

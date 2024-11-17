@@ -1,20 +1,17 @@
 #ifndef TABLE_H
 #define TABLE_H
 
+// Rowz structure
 typedef struct {
     int id;
     char* name;
     char* email;
 } Row;
 
-typedef struct {
-    Row* rows;
-    int num_rows;
-    int max_rows;
-} Table;
-
-Table* new_table();
-void insert_row(Table* table, Row* row);
-void select_rows(Table* table);
+// Functions
+void backup_database();
+BTreeNode* insert(BTreeNode* root, Row* row);
+BTreeNode* search_by_id(BTreeNode* root, int id);
+BTreeNode* search_by_name(BTreeNode* root, const char* name);
 
 #endif
