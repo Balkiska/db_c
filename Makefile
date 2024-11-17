@@ -23,7 +23,7 @@ table.o: src/table.c table.h btree.h row.h
 row.o: src/row.c row.h
 	$(CC) $(CFLAGS) -c src/row.c
 
-btree.o: src/btree.c btree.h
+btree.o: src/btree.c btree.h row.h
 	$(CC) $(CFLAGS) -c src/btree.c
 
 repl.o: src/repl.c repl.h table.h row.h
