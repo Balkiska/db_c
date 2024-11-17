@@ -284,3 +284,15 @@ void free_tree(BTreeNode* root) {
         free(root);
     }
 }
+
+// Freeing the allocated memory
+void free_tree(BTreeNode* root) {
+    if (root == NULL) return;
+    free_tree(root->left);
+    free_tree(root->right);
+    free(root->row->name);  
+    free(root->row->email); 
+    free(root->row);      
+    free(root);     
+}
+
