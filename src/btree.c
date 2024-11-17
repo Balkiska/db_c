@@ -177,6 +177,7 @@ BTreeNode* load_tree_from_disk() {
     return root;
 }
 
+
 // Function to delete node by ID
 BTreeNode* delete_by_id(BTreeNode* root, int id) {
     if (root == NULL) {
@@ -290,9 +291,8 @@ void free_tree(BTreeNode* root) {
     if (root == NULL) return;
     free_tree(root->left);
     free_tree(root->right);
-    free(root->row->name);  
-    free(root->row->email); 
-    free(root->row);      
-    free(root);     
+    free(root->row->name);
+    free(root->row->email);
+    free(root->row);
+    free(root);
 }
-
