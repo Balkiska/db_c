@@ -89,7 +89,14 @@ BTreeNode* search_by_email(BTreeNode* root, const char* email) {
         return left_search;
     }
     return search_by_email(root->right, email);  
+}
 
+// Print a row
+void print_row(Row* row) {
+    printf("| %-17d | %-27s | %-27s |\n", row->id, row->name, row->email);
+}
+
+// Print the tree in-order
 void print_tree(BTreeNode* root) {
     if (root != NULL) {
         print_tree(root->left);
@@ -115,7 +122,7 @@ void save_tree_to_disk(BTreeNode* root) {
         return;
     }
 
-    // Xrite nodes recursively
+    // Write nodes recursively
     void write_node(BTreeNode* node) {
         if (node == NULL) {
             return;
@@ -165,7 +172,7 @@ BTreeNode* load_tree_from_disk() {
     return root;
 }
 
-// Function do delete node by id
+// Function to delete node by ID
 BTreeNode* delete_by_id(BTreeNode* root, int id) {
     if (root == NULL) {
         return NULL;
@@ -197,6 +204,7 @@ BTreeNode* delete_by_id(BTreeNode* root, int id) {
     return root;
 }
 
+// Backup database to a file
 void backup_database(BTreeNode* root, const char* filename) {
     int fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
     if (fd == -1) {
@@ -249,11 +257,11 @@ void restore_recursive(BTreeNode** root, int fd) {
         row->name = strdup(name);
         row->email = strdup(email);
 
-        *root = insert(*root, row)
+        *root = insert(*root, row);
     }
 }
 
-//Free rowz
+// Free row memory
 void free_row(Row* row) {
     if (row != NULL) {
         free(row->name);   
@@ -262,7 +270,7 @@ void free_row(Row* row) {
     }
 }
 
-//Free tree
+// Free tree memory
 void free_tree(BTreeNode* root) {
     if (root != NULL) {
         free_tree(root->left);
@@ -270,29 +278,4 @@ void free_tree(BTreeNode* root) {
         free_row(root->row);
         free(root);
     }
-}
-
-// Free memory
-void free_tree(BTreeNode* root) {
-    if (root == NULL) {
-        return;
-    }
-
-    free_tree(root->left);
-    free_tree(root->right);
-    free(root->row->name);
-    free(root->row->email);
-    free(root->row);
-    free(root);
-}
-
-// Print
-void print_tree(BTreeNode* root) {
-    if (root == NULL) {
-        return;
-    }
-
-    print_tree(root->left);
-    printf("| %-30d | %-30s | %-30s |\n", root->row->id, root->row->name, root->row->email);
-    print_tree(root->right);
 }
