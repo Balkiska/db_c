@@ -2,6 +2,7 @@
 
 ## Description
 
+My name is Balkis( this message is for the teacher )
 This project consists of implementing a binary search tree in C to store data from a simulated database using SQL commands (`INSERT`, `SELECT`). The data is stored in a binary file on disk and can be manipulated through various operations.
 
 ## Features
